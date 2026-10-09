@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class FeeAccount {
     private String regNo;
     private double totalFee;
@@ -33,11 +35,34 @@ public class FeeAccount {
     }
 
     public static void main(String[] args) {
-        FeeAccount accountA = new FeeAccount("RA01", 200000);
-        accountA.payInTwoInstallments(120000);
-        System.out.println("Account A due: Rs " + accountA.getDue());
+        Scanner scanner = new Scanner(System.in);
 
-        FeeAccount accountB = new FeeAccount("RA02", 180000);
-        System.out.println("Account B effective due (20% scholarship): Rs " + accountB.effectiveDue(20));
+        System.out.print("Enter Registration Number: ");
+        String regNo = scanner.nextLine();
+
+        System.out.print("Enter Total Fee: ");
+        double totalFee = scanner.nextDouble();
+
+        FeeAccount account = new FeeAccount(regNo, totalFee);
+
+        System.out.print("Enter payment amount: ");
+        double payment = scanner.nextDouble();
+
+        System.out.print("Pay in two installments? (1 for Yes, 0 for No): ");
+        int choice = scanner.nextInt();
+
+        if (choice == 1) {
+            account.payInTwoInstallments(payment);
+        } else {
+            account.pay(payment);
+        }
+
+        System.out.println("\nCurrent Due: Rs " + account.getDue());
+
+        System.out.print("Enter Scholarship Percentage: ");
+        double scholarship = scanner.nextDouble();
+        System.out.println("Effective Due after Scholarship: Rs " + account.effectiveDue(scholarship));
+
+        scanner.close();
     }
 }
