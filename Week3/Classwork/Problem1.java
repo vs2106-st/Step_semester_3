@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class SrmStudent {
     String name;
     String regNo;
@@ -28,20 +30,36 @@ public class SrmStudent {
     }
 
     public static void main(String[] args) {
-        SrmStudent[] students = {
-            new SrmStudent("Ravi", "RA01", 82),
-            new SrmStudent("Anitha", "RA02", 68),
-            new SrmStudent("Karthik", "RA03", 91),
-            new SrmStudent("Meera", "RA04", 74),
-            new SrmStudent("Suresh", "RA05", 60)
-        };
+        Scanner scanner = new Scanner(System.in);
 
+        System.out.print("Enter number of students: ");
+        int count = scanner.nextInt();
+        scanner.nextLine();
+
+        SrmStudent[] students = new SrmStudent[count];
+
+        for (int i = 0; i < count; i++) {
+            System.out.println("\nEnter details for Student " + (i + 1) + ":");
+            System.out.print("Name: ");
+            String name = scanner.nextLine();
+            System.out.print("Registration No: ");
+            String regNo = scanner.nextLine();
+            System.out.print("Attendance Percentage: ");
+            int attendance = scanner.nextInt();
+            scanner.nextLine();
+
+            students[i] = new SrmStudent(name, regNo, attendance);
+        }
+
+        System.out.println("\n--- Student Status ---");
         for (SrmStudent s : students) {
             String status = s.isEligible() ? "Eligible" : "Detained";
-            System.out.println(s.name + " - " + s.attendance + "% - " + status);
+            System.out.println(s.name + " (" + s.regNo + ") - " + s.attendance + "% - " + status);
         }
 
         double avg = SrmStudent.classAverage(students);
-        System.out.println("Class average: " + avg + "%");
+        System.out.println("\nClass average: " + avg + "%");
+
+        scanner.close();
     }
 }
